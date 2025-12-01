@@ -1,9 +1,6 @@
 import sharp from 'sharp';
 import fs from 'fs/promises';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 interface BMFontChar {
   id: number;
@@ -66,7 +63,7 @@ function parseCommonAttributes(commonStr: string): { lineHeight: number; base: n
 export async function loadBMFont(xmlPath?: string): Promise<BMFont> {
   if (cachedFont) return cachedFont;
 
-  const fontPath = xmlPath || path.join(__dirname, '../../assets/fonts/gameboy.xml');
+  const fontPath = xmlPath || path.join(process.cwd(), 'assets/fonts/gameboy.xml');
   const fontDir = path.dirname(fontPath);
 
   const xmlContent = await fs.readFile(fontPath, 'utf-8');

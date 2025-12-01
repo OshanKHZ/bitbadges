@@ -1,10 +1,8 @@
 import sharp from 'sharp';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { loadBMFont, renderText, getTextWidth } from './bmfont.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ASSETS_PATH = path.join(__dirname, '../../assets/badge-parts');
+const ASSETS_PATH = path.join(process.cwd(), 'assets/badge-parts');
 
 interface BadgeOptions {
   text: string;

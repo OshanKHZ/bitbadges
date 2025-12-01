@@ -74,6 +74,8 @@ https://bitbadges.vercel.app/badge/:text/:color
 | `html` | default |
 | `tailwind` | white, black |
 | `supabase` | default, black |
+| `docker` | default, black |
+| `claude-code` | default, black |
 
 ## Endpoints
 

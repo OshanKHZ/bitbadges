@@ -215,10 +215,10 @@ export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
   // Padding constants
   const PADDING = 2;
 
-  // Middle section = logo + padding + text + padding
+  // Middle section = padding + logo + gap + text + padding
   const LOGO_TEXT_GAP = 3;
   const logoSection = logoBuffer ? logoWidth + LOGO_TEXT_GAP : 0;
-  const middleSectionWidth = PADDING + logoSection + textWidth;
+  const middleSectionWidth = PADDING + logoSection + textWidth + 2;
 
   // Total width
   const totalWidth = leftPart.width + middleSectionWidth + rightPart.width;

@@ -1,7 +1,7 @@
 {
-  "name": "pixel-badges",
+  "name": "bitbadges",
   "version": "1.0.0",
-  "description": "Pixel art badge generator API",
+  "description": "8-bit style badge generator API",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",

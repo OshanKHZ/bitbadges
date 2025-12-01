@@ -99,7 +99,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     try {
       const text = decodeURIComponent(badgeMatch[1]);
       const color = badgeMatch[2];
-      const scale = parseInt(query.scale as string) || 4;
+      const scale = parseFloat(query.scale as string) || 4;
       const logoName = query.logo as string | undefined;
       const logoColor = query.logoColor as string | undefined;
       const textColorParam = query.textColor as string | undefined;

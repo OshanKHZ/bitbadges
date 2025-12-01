@@ -102,6 +102,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const scale = parseInt(query.scale as string) || 4;
       const logoName = query.logo as string | undefined;
       const logoColor = query.logoColor as string | undefined;
+      const textColorParam = query.textColor as string | undefined;
+
+      // Validate textColor
+      const textColor = textColorParam === 'white' || textColorParam === 'black'
+        ? textColorParam
+        : 'auto';
 
       let logoPath: string | undefined;
       if (logoName) {
@@ -121,6 +127,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         color: `#${color}`,
         scale: Math.min(Math.max(scale, 1), 8),
         logo: logoPath,
+        textColor,
       });
 
       res.setHeader('Content-Type', 'image/png');

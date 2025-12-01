@@ -9,6 +9,7 @@ interface BadgeOptions {
   color: string; // hex color like "#3178C6"
   scale?: number; // output scale (1 = original, 2 = 2x, etc)
   logo?: string; // path to logo image (optional)
+  textColor?: 'white' | 'black' | 'auto'; // text color (default: auto)
 }
 
 interface RGB {
@@ -166,17 +167,24 @@ async function loadPart(partName: 'left' | 'middle' | 'right', color: RGB): Prom
 }
 
 export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
-  const { text, color, scale = 1, logo } = options;
+  const { text, color, scale = 1, logo, textColor: textColorOption = 'auto' } = options;
   const targetColor = hexToRgb(color);
 
-  // Calculate text color based on background luminance
-  // Using relative luminance formula: https://www.w3.org/TR/WCAG20/#relativeluminancedef
-  const luminance = (0.299 * targetColor.r + 0.587 * targetColor.g + 0.114 * targetColor.b) / 255;
-
-  // If background is light (luminance > 0.5), use dark text; otherwise white
-  const textColor: RGB = luminance > 0.5
-    ? { r: 30, g: 30, b: 30 }   // dark text for light backgrounds
-    : { r: 255, g: 255, b: 255 }; // white text for dark backgrounds
+  // Determine text color
+  const getTextColor = (): RGB => {
+    if (textColorOption === 'white') {
+      return { r: 255, g: 255, b: 255 };
+    }
+    if (textColorOption === 'black') {
+      return { r: 30, g: 30, b: 30 };
+    }
+    // Auto: Calculate based on background luminance
+    const luminance = (0.299 * targetColor.r + 0.587 * targetColor.g + 0.114 * targetColor.b) / 255;
+    return luminance > 0.5
+      ? { r: 30, g: 30, b: 30 }   // dark text for light backgrounds
+      : { r: 255, g: 255, b: 255 }; // white text for dark backgrounds
+  };
+  const textColor = getTextColor();
 
   // Load font
   const font = await loadBMFont();

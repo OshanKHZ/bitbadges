@@ -153,17 +153,20 @@ export async function renderText(
 
   // Calculate vertical offset to center text
   // Find min yoffset and max total height (yoffset + height)
+  // Ignore characters with height=0 (like space) for alignment calculation
   let minYOffset = Infinity;
   let maxBottomY = 0;
   for (const char of text) {
     const charCode = char.charCodeAt(0);
     const charData = font.chars.get(charCode);
-    if (charData) {
+    if (charData && charData.height > 0) {
       if (charData.yoffset < minYOffset) minYOffset = charData.yoffset;
       const bottomY = charData.yoffset + charData.height;
       if (bottomY > maxBottomY) maxBottomY = bottomY;
     }
   }
+  // Fallback if no visible characters
+  if (minYOffset === Infinity) minYOffset = 0;
   const textTotalHeight = maxBottomY - minYOffset;
   const baseOffsetY = Math.floor((height - textTotalHeight) / 2) - minYOffset;
 

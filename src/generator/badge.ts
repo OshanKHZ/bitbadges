@@ -10,6 +10,7 @@ interface BadgeOptions {
   text: string;
   color: string; // hex color like "#3178C6"
   scale?: number; // output scale (1 = original, 2 = 2x, etc)
+  logo?: string; // path to logo image (optional)
 }
 
 interface RGB {
@@ -167,7 +168,7 @@ async function loadPart(partName: 'left' | 'middle' | 'right', color: RGB): Prom
 }
 
 export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
-  const { text, color, scale = 1 } = options;
+  const { text, color, scale = 1, logo } = options;
   const targetColor = hexToRgb(color);
 
   // Calculate text color based on background luminance
@@ -182,6 +183,17 @@ export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
   // Load font
   const font = await loadBMFont();
 
+  // Load logo if provided
+  let logoBuffer: Buffer | null = null;
+  let logoWidth = 0;
+  let logoHeight = 0;
+  if (logo) {
+    logoBuffer = await sharp(logo).png().toBuffer();
+    const logoMeta = await sharp(logoBuffer).metadata();
+    logoWidth = logoMeta.width || 0;
+    logoHeight = logoMeta.height || 0;
+  }
+
   // Load all parts
   const [leftPart, middlePart, rightPart] = await Promise.all([
     loadPart('left', targetColor),
@@ -194,11 +206,13 @@ export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
   // Calculate text width using BMFont
   const textWidth = getTextWidth(font, text);
 
-  // Text padding
-  const TEXT_PADDING_LEFT = 2;
+  // Padding constants
+  const PADDING = 2;
 
-  // Middle section = text width + left padding
-  const middleSectionWidth = textWidth + TEXT_PADDING_LEFT;
+  // Middle section = logo + padding + text + padding
+  const LOGO_TEXT_GAP = 4;
+  const logoSection = logoBuffer ? logoWidth + LOGO_TEXT_GAP : 0;
+  const middleSectionWidth = PADDING + logoSection + textWidth;
 
   // Total width
   const totalWidth = leftPart.width + middleSectionWidth + rightPart.width;
@@ -237,6 +251,21 @@ export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
     { input: rightPart.highlights, left: rightX, top: 0 }
   );
 
+  // Calculate positions
+  const contentStartX = leftPart.width + PADDING;
+  const logoX = contentStartX;
+  const textX = contentStartX + logoSection;
+
+  // Add logo if provided
+  if (logoBuffer) {
+    const logoY = Math.floor((height - logoHeight) / 2);
+    compositeOps.push({
+      input: logoBuffer,
+      left: logoX,
+      top: logoY,
+    });
+  }
+
   // Render text with BMFont
   const { buffer: textBuffer, width: textBufferWidth } = await renderText(
     font,
@@ -251,10 +280,10 @@ export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
     .png()
     .toBuffer();
 
-  // Add text (starts at left part width + padding)
+  // Add text
   compositeOps.push({
     input: textPng,
-    left: leftPart.width + TEXT_PADDING_LEFT,
+    left: textX,
     top: 0,
   });
 

@@ -1,114 +1,102 @@
 # BitBadges
 
-A pixel art badge generator API. Create 8-bit style badges for your README files!
+8-bit style badge generator API for README files.
 
-## Examples
-
-![TypeScript](output/typescript.png)
-![Python](output/python.png)
-![HTML](output/html.png)
-![Tailwind CSS](output/tailwind%20css.png)
-![Supabase](output/supabase.png)
-![React](output/react.png)
+![TypeScript](https://bitbadges.vercel.app/badge/TypeScript/007ACC?scale=sm)
+![Python](https://bitbadges.vercel.app/badge/Python/3776AB?logo=python&scale=sm)
+![Tailwind CSS](https://bitbadges.vercel.app/badge/Tailwind%20CSS/06B6D4?logo=tailwind&logoColor=black&scale=sm)
+![HTML5](https://bitbadges.vercel.app/badge/HTML5/E34F26?logo=html&scale=sm)
+![Supabase](https://bitbadges.vercel.app/badge/Supabase/3ECF8E?logo=supabase&logoColor=black&scale=sm)
 
 ## Usage
 
-### Basic Badge (text only)
+```
+https://bitbadges.vercel.app/badge/:text/:color
+```
 
-```
-GET /badge/:text/:color
-```
+### Basic
 
 ```markdown
-![React](https://your-domain.com/badge/React/61DAFB)
+![React](https://bitbadges.vercel.app/badge/React/61DAFB)
 ```
 
-### Badge with Logo
-
-```
-GET /badge/:text/:color?logo=:logoName
-```
+### With Logo
 
 ```markdown
-![Python](https://your-domain.com/badge/Python/3776AB?logo=python)
+![Python](https://bitbadges.vercel.app/badge/Python/3776AB?logo=python)
 ```
 
-### Badge with Logo Color Variant
-
-```
-GET /badge/:text/:color?logo=:logoName&logoColor=:color
-```
+### With Logo Color
 
 ```markdown
-![Tailwind](https://your-domain.com/badge/Tailwind%20CSS/38bdf8?logo=tailwind&logoColor=black)
+![Tailwind](https://bitbadges.vercel.app/badge/Tailwind%20CSS/06B6D4?logo=tailwind&logoColor=black)
 ```
 
-## API Reference
+### With Text Color
 
-### `GET /badge/:text/:color`
+```markdown
+![TypeScript](https://bitbadges.vercel.app/badge/TypeScript/007ACC?textColor=black)
+```
 
-Generates a pixel art badge.
+### With Scale
+
+```markdown
+![React](https://bitbadges.vercel.app/badge/React/61DAFB?scale=md)
+```
+
+## Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `text` | path | The text to display |
-| `color` | path | Hex color without # (e.g., `3178C6`) |
-| `logo` | query | Logo name (e.g., `python`, `tailwind`) |
-| `logoColor` | query | Logo variant (e.g., `white`, `black`) |
-| `scale` | query | Output scale 1-8 (default: `4`) |
+| `text` | path | Badge text |
+| `color` | path | Hex color without `#` |
+| `logo` | query | Logo name |
+| `logoColor` | query | Logo variant (`white`, `black`) |
+| `textColor` | query | Text color (`white`, `black`, `auto`) |
+| `scale` | query | Size preset or number |
 
-### `GET /logos`
+### Scale Presets
 
-Returns a list of all available logos.
-
-### `GET /`
-
-Returns API documentation.
+| Preset | Scale |
+|--------|-------|
+| `xs` | 1x |
+| `sm` | 1.5x |
+| `md` | 2x |
+| `lg` | 2.5x |
+| `xl` | 3x |
+| `xxl` | 4x |
 
 ## Available Logos
 
 | Logo | Variants |
 |------|----------|
-| `python` | default, white, black |
+| `python` | default |
 | `html` | default |
-| `tailwind` | default, white, black |
+| `tailwind` | white, black |
 | `supabase` | default, black |
+
+## Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /badge/:text/:color` | Generate badge |
+| `GET /logos` | List available logos |
+| `GET /` | API info |
 
 ## Running Locally
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
-
-# Generate test badges
-npm run test:badge
 ```
 
-## Adding New Logos
+## Adding Logos
 
-1. Create a folder in `assets/logos/` with the logo name
-2. Add PNG files (16x16 recommended):
-   - `logoname.png` - default version
+1. Create folder in `assets/logos/` with logo name
+2. Add 16x16 PNG files:
+   - `logoname.png` - default
    - `logoname-white.png` - white variant
    - `logoname-black.png` - black variant
-
-```
-assets/logos/
-└── mylogo/
-    ├── mylogo.png
-    ├── mylogo-white.png
-    └── mylogo-black.png
-```
-
-## Tech Stack
-
-- Node.js + TypeScript
-- Express
-- Sharp (image processing)
-- BMFont (bitmap font rendering)
 
 ## License
 

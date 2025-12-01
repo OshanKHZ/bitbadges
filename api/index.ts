@@ -109,7 +109,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         xxl: 4,
       };
       const scaleParam = query.scale as string;
-      const scale = scalePresets[scaleParam] ?? parseFloat(scaleParam) || 2;
+      const scale = scalePresets[scaleParam] ?? (parseFloat(scaleParam) || 2);
       const logoName = query.logo as string | undefined;
       const logoColor = query.logoColor as string | undefined;
       const textColorParam = query.textColor as string | undefined;

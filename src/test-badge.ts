@@ -1,7 +1,8 @@
-import { generateBadge } from "./generator/badge.js";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
+
+import { generateBadge } from "./generator/badge.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -57,4 +58,4 @@ async function test() {
   console.log("\n🎉 Done! Check the output folder.");
 }
 
-test();
+void test();

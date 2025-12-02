@@ -1,6 +1,7 @@
-import sharp from "sharp";
 import fs from "fs/promises";
 import path from "path";
+
+import sharp from "sharp";
 
 interface BMFontChar {
   id: number;

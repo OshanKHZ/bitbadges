@@ -1,5 +1,7 @@
-import sharp from "sharp";
 import path from "path";
+
+import sharp from "sharp";
+
 import { loadBMFont, renderText, getTextWidth } from "./bmfont.js";
 
 const ASSETS_PATH = path.join(process.cwd(), "assets/badge-parts");

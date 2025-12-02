@@ -1,6 +1,8 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import path from "path";
 import fs from "fs";
+import path from "path";
+
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+
 import { generateBadge } from "../src/generator/badge.js";
 
 const LOGOS_PATH = path.join(process.cwd(), "assets/logos");
@@ -92,7 +94,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       return res.json({ logos });
-    } catch (error) {
+    } catch (_error) {
       return res.status(500).json({ error: "Failed to list logos" });
     }
   }

@@ -1,15 +1,15 @@
-import sharp from 'sharp';
-import path from 'path';
-import { loadBMFont, renderText, getTextWidth } from './bmfont.js';
+import sharp from "sharp";
+import path from "path";
+import { loadBMFont, renderText, getTextWidth } from "./bmfont.js";
 
-const ASSETS_PATH = path.join(process.cwd(), 'assets/badge-parts');
+const ASSETS_PATH = path.join(process.cwd(), "assets/badge-parts");
 
 interface BadgeOptions {
   text: string;
   color: string; // hex color like "#3178C6"
   scale?: number; // output scale (1 = original, 2 = 2x, etc)
   logo?: string; // path to logo image (optional)
-  textColor?: 'white' | 'black' | 'auto'; // text color (default: auto)
+  textColor?: "white" | "black" | "auto"; // text color (default: auto)
 }
 
 interface RGB {
@@ -38,19 +38,33 @@ function hexToRgb(hex: string): RGB {
 }
 
 // Convert RGB to HSL
-function rgbToHsl(r: number, g: number, b: number): { h: number; s: number; l: number } {
-  r /= 255; g /= 255; b /= 255;
-  const max = Math.max(r, g, b), min = Math.min(r, g, b);
-  let h = 0, s = 0;
+function rgbToHsl(
+  r: number,
+  g: number,
+  b: number,
+): { h: number; s: number; l: number } {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  const max = Math.max(r, g, b),
+    min = Math.min(r, g, b);
+  let h = 0,
+    s = 0;
   const l = (max + min) / 2;
 
   if (max !== min) {
     const d = max - min;
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
     switch (max) {
-      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
-      case g: h = ((b - r) / d + 2) / 6; break;
-      case b: h = ((r - g) / d + 4) / 6; break;
+      case r:
+        h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+        break;
+      case g:
+        h = ((b - r) / d + 2) / 6;
+        break;
+      case b:
+        h = ((r - g) / d + 4) / 6;
+        break;
     }
   }
   return { h, s, l };
@@ -65,18 +79,22 @@ function hslToRgb(h: number, s: number, l: number): RGB {
     const hue2rgb = (p: number, q: number, t: number) => {
       if (t < 0) t += 1;
       if (t > 1) t -= 1;
-      if (t < 1/6) return p + (q - p) * 6 * t;
-      if (t < 1/2) return q;
-      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
       return p;
     };
     const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
     const p = 2 * l - q;
-    r = hue2rgb(p, q, h + 1/3);
+    r = hue2rgb(p, q, h + 1 / 3);
     g = hue2rgb(p, q, h);
-    b = hue2rgb(p, q, h - 1/3);
+    b = hue2rgb(p, q, h - 1 / 3);
   }
-  return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
+  return {
+    r: Math.round(r * 255),
+    g: Math.round(g * 255),
+    b: Math.round(b * 255),
+  };
 }
 
 // Generate shadow color (darker)
@@ -91,7 +109,10 @@ function getHighlightColor(color: RGB): RGB {
   return hslToRgb(hsl.h, hsl.s, Math.min(1, hsl.l + 0.2));
 }
 
-async function recolorImage(imagePath: string, targetColor: RGB): Promise<Buffer> {
+async function recolorImage(
+  imagePath: string,
+  targetColor: RGB,
+): Promise<Buffer> {
   const image = sharp(imagePath);
   const { data, info } = await image
     .raw()
@@ -143,15 +164,18 @@ async function recolorImage(imagePath: string, targetColor: RGB): Promise<Buffer
     .toBuffer();
 }
 
-async function loadPart(partName: 'left' | 'middle' | 'right', color: RGB): Promise<BadgePart> {
+async function loadPart(
+  partName: "left" | "middle" | "right",
+  color: RGB,
+): Promise<BadgePart> {
   const partPath = path.join(ASSETS_PATH, partName);
 
   // Recolor all layers (base, shadows, highlights have gray tones)
   const [base, border, shadows, highlights] = await Promise.all([
-    recolorImage(path.join(partPath, 'base.png'), color),
-    sharp(path.join(partPath, 'border.png')).png().toBuffer(), // border stays fixed
-    recolorImage(path.join(partPath, 'shadows.png'), color),
-    recolorImage(path.join(partPath, 'highlights.png'), color),
+    recolorImage(path.join(partPath, "base.png"), color),
+    sharp(path.join(partPath, "border.png")).png().toBuffer(), // border stays fixed
+    recolorImage(path.join(partPath, "shadows.png"), color),
+    recolorImage(path.join(partPath, "highlights.png"), color),
   ]);
 
   const metadata = await sharp(base).metadata();
@@ -167,21 +191,29 @@ async function loadPart(partName: 'left' | 'middle' | 'right', color: RGB): Prom
 }
 
 export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
-  const { text, color, scale = 1, logo, textColor: textColorOption = 'auto' } = options;
+  const {
+    text,
+    color,
+    scale = 1,
+    logo,
+    textColor: textColorOption = "auto",
+  } = options;
   const targetColor = hexToRgb(color);
 
   // Determine text color
   const getTextColor = (): RGB => {
-    if (textColorOption === 'white') {
+    if (textColorOption === "white") {
       return { r: 255, g: 255, b: 255 };
     }
-    if (textColorOption === 'black') {
+    if (textColorOption === "black") {
       return { r: 30, g: 30, b: 30 };
     }
     // Auto: Calculate based on background luminance
-    const luminance = (0.299 * targetColor.r + 0.587 * targetColor.g + 0.114 * targetColor.b) / 255;
+    const luminance =
+      (0.299 * targetColor.r + 0.587 * targetColor.g + 0.114 * targetColor.b) /
+      255;
     return luminance > 0.5
-      ? { r: 30, g: 30, b: 30 }   // dark text for light backgrounds
+      ? { r: 30, g: 30, b: 30 } // dark text for light backgrounds
       : { r: 255, g: 255, b: 255 }; // white text for dark backgrounds
   };
   const textColor = getTextColor();
@@ -202,9 +234,9 @@ export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
 
   // Load all parts
   const [leftPart, middlePart, rightPart] = await Promise.all([
-    loadPart('left', targetColor),
-    loadPart('middle', targetColor),
-    loadPart('right', targetColor),
+    loadPart("left", targetColor),
+    loadPart("middle", targetColor),
+    loadPart("right", targetColor),
   ]);
 
   const height = leftPart.height;
@@ -234,7 +266,7 @@ export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
     { input: leftPart.base, left: 0, top: 0 },
     { input: leftPart.border, left: 0, top: 0 },
     { input: leftPart.shadows, left: 0, top: 0 },
-    { input: leftPart.highlights, left: 0, top: 0 }
+    { input: leftPart.highlights, left: 0, top: 0 },
   );
 
   // Add middle tiles (to fill the middle section)
@@ -244,7 +276,7 @@ export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
       { input: middlePart.base, left: x, top: 0 },
       { input: middlePart.border, left: x, top: 0 },
       { input: middlePart.shadows, left: x, top: 0 },
-      { input: middlePart.highlights, left: x, top: 0 }
+      { input: middlePart.highlights, left: x, top: 0 },
     );
   }
 
@@ -254,7 +286,7 @@ export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
     { input: rightPart.base, left: rightX, top: 0 },
     { input: rightPart.border, left: rightX, top: 0 },
     { input: rightPart.shadows, left: rightX, top: 0 },
-    { input: rightPart.highlights, left: rightX, top: 0 }
+    { input: rightPart.highlights, left: rightX, top: 0 },
   );
 
   // Calculate positions
@@ -277,7 +309,7 @@ export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
     font,
     text,
     textColor,
-    height
+    height,
   );
 
   const textPng = await sharp(textBuffer, {
@@ -311,7 +343,7 @@ export async function generateBadge(options: BadgeOptions): Promise<Buffer> {
     const scaledWidth = totalWidth * scale;
     const scaledHeight = height * scale;
     badge = await sharp(badge)
-      .resize(scaledWidth, scaledHeight, { kernel: 'nearest' })
+      .resize(scaledWidth, scaledHeight, { kernel: "nearest" })
       .png()
       .toBuffer();
   }

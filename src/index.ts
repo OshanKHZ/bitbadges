@@ -1,17 +1,20 @@
-import express from 'express';
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-import { generateBadge } from './generator/badge.js';
+import express from "express";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
+import { generateBadge } from "./generator/badge.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const LOGOS_PATH = path.join(__dirname, '../assets/logos');
+const LOGOS_PATH = path.join(__dirname, "../assets/logos");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Helper to find logo file
-function findLogoPath(logoName: string, logoColor?: string): string | undefined {
+function findLogoPath(
+  logoName: string,
+  logoColor?: string,
+): string | undefined {
   const logoDir = path.join(LOGOS_PATH, logoName);
 
   if (!fs.existsSync(logoDir)) {
@@ -34,7 +37,7 @@ function findLogoPath(logoName: string, logoColor?: string): string | undefined 
 
   // Try to find any png in the directory
   const files = fs.readdirSync(logoDir);
-  const pngFile = files.find(f => f.endsWith('.png'));
+  const pngFile = files.find((f) => f.endsWith(".png"));
   if (pngFile) {
     return path.join(logoDir, pngFile);
   }
@@ -47,7 +50,7 @@ function findLogoPath(logoName: string, logoColor?: string): string | undefined 
 // Example with logo: /badge/Python/3776AB?logo=python
 // Example with logo color: /badge/Tailwind/38bdf8?logo=tailwind&logoColor=black
 // Example with scale: /badge/TypeScript/3178C6?scale=4
-app.get('/badge/:text/:color', async (req, res) => {
+app.get("/badge/:text/:color", async (req, res) => {
   try {
     const { text, color } = req.params;
     const scale = parseInt(req.query.scale as string) || 4;
@@ -61,9 +64,9 @@ app.get('/badge/:text/:color', async (req, res) => {
       if (!logoPath) {
         return res.status(404).json({
           error: `Logo '${logoName}' not found`,
-          availableLogos: fs.readdirSync(LOGOS_PATH).filter(f =>
-            fs.statSync(path.join(LOGOS_PATH, f)).isDirectory()
-          )
+          availableLogos: fs
+            .readdirSync(LOGOS_PATH)
+            .filter((f) => fs.statSync(path.join(LOGOS_PATH, f)).isDirectory()),
         });
       }
     }
@@ -75,27 +78,28 @@ app.get('/badge/:text/:color', async (req, res) => {
       logo: logoPath,
     });
 
-    res.set('Content-Type', 'image/png');
-    res.set('Cache-Control', 'public, max-age=31536000');
+    res.set("Content-Type", "image/png");
+    res.set("Cache-Control", "public, max-age=31536000");
     res.send(badge);
   } catch (error) {
-    console.error('Error generating badge:', error);
-    res.status(500).json({ error: 'Failed to generate badge' });
+    console.error("Error generating badge:", error);
+    res.status(500).json({ error: "Failed to generate badge" });
   }
 });
 
 // List available logos
-app.get('/logos', (req, res) => {
+app.get("/logos", (req, res) => {
   const logos: Record<string, string[]> = {};
 
-  const logoDirs = fs.readdirSync(LOGOS_PATH).filter(f =>
-    fs.statSync(path.join(LOGOS_PATH, f)).isDirectory()
-  );
+  const logoDirs = fs
+    .readdirSync(LOGOS_PATH)
+    .filter((f) => fs.statSync(path.join(LOGOS_PATH, f)).isDirectory());
 
   for (const dir of logoDirs) {
-    const files = fs.readdirSync(path.join(LOGOS_PATH, dir))
-      .filter(f => f.endsWith('.png'))
-      .map(f => f.replace('.png', ''));
+    const files = fs
+      .readdirSync(path.join(LOGOS_PATH, dir))
+      .filter((f) => f.endsWith(".png"))
+      .map((f) => f.replace(".png", ""));
     logos[dir] = files;
   }
 
@@ -103,33 +107,33 @@ app.get('/logos', (req, res) => {
 });
 
 // Health check
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.json({
-    name: 'BitBadges API',
-    version: '1.0.0',
+    name: "BitBadges API",
+    version: "1.0.0",
     endpoints: {
       badge: {
-        url: '/badge/:text/:color',
+        url: "/badge/:text/:color",
         params: {
-          text: 'The text to display',
-          color: 'Hex color without # (e.g., 3178C6)',
+          text: "The text to display",
+          color: "Hex color without # (e.g., 3178C6)",
         },
         query: {
-          logo: 'Logo name (e.g., python, tailwind)',
-          logoColor: 'Logo variant (e.g., white, black)',
-          scale: 'Output scale 1-8 (default: 4)',
+          logo: "Logo name (e.g., python, tailwind)",
+          logoColor: "Logo variant (e.g., white, black)",
+          scale: "Output scale 1-8 (default: 4)",
         },
       },
       logos: {
-        url: '/logos',
-        description: 'List all available logos',
+        url: "/logos",
+        description: "List all available logos",
       },
     },
     examples: [
-      '/badge/TypeScript/3178C6',
-      '/badge/Python/3776AB?logo=python',
-      '/badge/Tailwind/38bdf8?logo=tailwind&logoColor=black',
-      '/badge/React/61DAFB?scale=2',
+      "/badge/TypeScript/3178C6",
+      "/badge/Python/3776AB?logo=python",
+      "/badge/Tailwind/38bdf8?logo=tailwind&logoColor=black",
+      "/badge/React/61DAFB?scale=2",
     ],
   });
 });

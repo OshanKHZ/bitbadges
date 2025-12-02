@@ -6,7 +6,5 @@
       "includeFiles": "{assets/**/*,src/**/*}"
     }
   },
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index" }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }]
 }

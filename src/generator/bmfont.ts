@@ -1,6 +1,6 @@
-import sharp from 'sharp';
-import fs from 'fs/promises';
-import path from 'path';
+import sharp from "sharp";
+import fs from "fs/promises";
+import path from "path";
 
 interface BMFontChar {
   id: number;
@@ -45,7 +45,12 @@ function parseCharAttributes(charStr: string): BMFontChar {
   };
 }
 
-function parseCommonAttributes(commonStr: string): { lineHeight: number; base: number; scaleW: number; scaleH: number } {
+function parseCommonAttributes(commonStr: string): {
+  lineHeight: number;
+  base: number;
+  scaleW: number;
+  scaleH: number;
+} {
   const attrs: Record<string, number> = {};
   const regex = /(\w+)="(-?\d+)"/g;
   let match;
@@ -63,19 +68,20 @@ function parseCommonAttributes(commonStr: string): { lineHeight: number; base: n
 export async function loadBMFont(xmlPath?: string): Promise<BMFont> {
   if (cachedFont) return cachedFont;
 
-  const fontPath = xmlPath || path.join(process.cwd(), 'assets/fonts/gameboy.xml');
+  const fontPath =
+    xmlPath || path.join(process.cwd(), "assets/fonts/gameboy.xml");
   const fontDir = path.dirname(fontPath);
 
-  const xmlContent = await fs.readFile(fontPath, 'utf-8');
+  const xmlContent = await fs.readFile(fontPath, "utf-8");
 
   // Parse common attributes
   const commonMatch = xmlContent.match(/<common[^>]+>/);
-  if (!commonMatch) throw new Error('Invalid BMFont: missing <common>');
+  if (!commonMatch) throw new Error("Invalid BMFont: missing <common>");
   const common = parseCommonAttributes(commonMatch[0]);
 
   // Parse page (texture file)
   const pageMatch = xmlContent.match(/<page[^>]+file="([^"]+)"/);
-  if (!pageMatch) throw new Error('Invalid BMFont: missing <page>');
+  if (!pageMatch) throw new Error("Invalid BMFont: missing <page>");
   const texturePath = path.join(fontDir, pageMatch[1]);
 
   // Parse all chars
@@ -125,10 +131,10 @@ export async function renderText(
   font: BMFont,
   text: string,
   color: RGB,
-  height: number
+  height: number,
 ): Promise<{ buffer: Buffer; width: number }> {
   if (!font.textureBuffer) {
-    throw new Error('Font texture not loaded');
+    throw new Error("Font texture not loaded");
   }
 
   const textWidth = getTextWidth(font, text);

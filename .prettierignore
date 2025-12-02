@@ -1,0 +1,29 @@
+# .prettierignore
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Package manager files
+pnpm-lock.yaml
+
+# Build outputs
+dist
+output
+
+# Assets and media files
+assets
+aseprite-files
+
+# Version control
+.git
+
+# Logs
+*.log
+
+# Environment files
+.env*
+!.env.example
+
+# Cache
+.cache

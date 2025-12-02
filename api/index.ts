@@ -1,11 +1,14 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import path from 'path';
-import fs from 'fs';
-import { generateBadge } from '../src/generator/badge.js';
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import path from "path";
+import fs from "fs";
+import { generateBadge } from "../src/generator/badge.js";
 
-const LOGOS_PATH = path.join(process.cwd(), 'assets/logos');
+const LOGOS_PATH = path.join(process.cwd(), "assets/logos");
 
-function findLogoPath(logoName: string, logoColor?: string): string | undefined {
+function findLogoPath(
+  logoName: string,
+  logoColor?: string,
+): string | undefined {
   const logoDir = path.join(LOGOS_PATH, logoName);
 
   if (!fs.existsSync(logoDir)) {
@@ -25,7 +28,7 @@ function findLogoPath(logoName: string, logoColor?: string): string | undefined 
   }
 
   const files = fs.readdirSync(logoDir);
-  const pngFile = files.find(f => f.endsWith('.png'));
+  const pngFile = files.find((f) => f.endsWith(".png"));
   if (pngFile) {
     return path.join(logoDir, pngFile);
   }
@@ -37,59 +40,60 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { url } = req;
 
   // Parse the URL path
-  const urlPath = url?.split('?')[0] || '/';
+  const urlPath = url?.split("?")[0] || "/";
   const query = req.query;
 
   // Home route
-  if (urlPath === '/' || urlPath === '') {
+  if (urlPath === "/" || urlPath === "") {
     return res.json({
-      name: 'BitBadges API',
-      version: '1.0.0',
+      name: "BitBadges API",
+      version: "1.0.0",
       endpoints: {
         badge: {
-          url: '/badge/:text/:color',
+          url: "/badge/:text/:color",
           params: {
-            text: 'The text to display',
-            color: 'Hex color without # (e.g., 3178C6)',
+            text: "The text to display",
+            color: "Hex color without # (e.g., 3178C6)",
           },
           query: {
-            logo: 'Logo name (e.g., python, tailwind)',
-            logoColor: 'Logo variant (e.g., white, black)',
-            scale: 'Output scale 1-8 (default: 4)',
+            logo: "Logo name (e.g., python, tailwind)",
+            logoColor: "Logo variant (e.g., white, black)",
+            scale: "Output scale 1-8 (default: 4)",
           },
         },
         logos: {
-          url: '/logos',
-          description: 'List all available logos',
+          url: "/logos",
+          description: "List all available logos",
         },
       },
       examples: [
-        '/badge/TypeScript/3178C6',
-        '/badge/Python/3776AB?logo=python',
-        '/badge/Tailwind/38bdf8?logo=tailwind&logoColor=black',
-        '/badge/React/61DAFB?scale=2',
+        "/badge/TypeScript/3178C6",
+        "/badge/Python/3776AB?logo=python",
+        "/badge/Tailwind/38bdf8?logo=tailwind&logoColor=black",
+        "/badge/React/61DAFB?scale=2",
       ],
     });
   }
 
   // Logos route
-  if (urlPath === '/logos') {
+  if (urlPath === "/logos") {
     try {
       const logos: Record<string, string[]> = {};
-      const logoDirs = fs.readdirSync(LOGOS_PATH).filter(f =>
-        fs.statSync(path.join(LOGOS_PATH, f)).isDirectory()
-      );
+      const logoDirs = fs
+        .readdirSync(LOGOS_PATH)
+        .filter((f) => fs.statSync(path.join(LOGOS_PATH, f)).isDirectory());
 
       for (const dir of logoDirs) {
-        const files = fs.readdirSync(path.join(LOGOS_PATH, dir))
-          .filter(f => f.endsWith('.png'))
-          .map(f => f.replace('.png', ''));
+        const files = fs
+          .readdirSync(path.join(LOGOS_PATH, dir))
+          .filter((f) => f.endsWith(".png"))
+          .map((f) => f.replace(".png", ""));
         logos[dir] = files;
       }
 
       return res.json({ logos });
     } catch (error) {
-      return res.status(500).json({ error: 'Failed to list logos' });
+      return res.status(500).json({ error: "Failed to list logos" });
     }
   }
 
@@ -115,9 +119,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const textColorParam = query.textColor as string | undefined;
 
       // Validate textColor
-      const textColor = textColorParam === 'white' || textColorParam === 'black'
-        ? textColorParam
-        : 'auto';
+      const textColor =
+        textColorParam === "white" || textColorParam === "black"
+          ? textColorParam
+          : "auto";
 
       let logoPath: string | undefined;
       if (logoName) {
@@ -125,9 +130,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (!logoPath) {
           return res.status(404).json({
             error: `Logo '${logoName}' not found`,
-            availableLogos: fs.readdirSync(LOGOS_PATH).filter(f =>
-              fs.statSync(path.join(LOGOS_PATH, f)).isDirectory()
-            )
+            availableLogos: fs
+              .readdirSync(LOGOS_PATH)
+              .filter((f) =>
+                fs.statSync(path.join(LOGOS_PATH, f)).isDirectory(),
+              ),
           });
         }
       }
@@ -140,15 +147,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         textColor,
       });
 
-      res.setHeader('Content-Type', 'image/png');
-      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      res.setHeader("Content-Type", "image/png");
+      res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
       return res.send(badge);
     } catch (error) {
-      console.error('Error generating badge:', error);
-      return res.status(500).json({ error: 'Failed to generate badge' });
+      console.error("Error generating badge:", error);
+      return res.status(500).json({ error: "Failed to generate badge" });
     }
   }
 
   // 404
-  return res.status(404).json({ error: 'Not found' });
+  return res.status(404).json({ error: "Not found" });
 }

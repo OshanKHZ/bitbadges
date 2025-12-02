@@ -55,7 +55,7 @@ Retro pixel-art badges inspired by classic video games. Perfect for adding perso
 | Python | <img src="https://bitbadges.vercel.app/badge/Python/3776AB?logo=python&scale=md" /> | `![Python](https://bitbadges.vercel.app/badge/Python/3776AB?logo=python)` |
 | Golang | <img src="https://bitbadges.vercel.app/badge/Golang/00ADD8?logo=golang&logoColor=black&textColor=black&scale=md" /> | `![Golang](https://bitbadges.vercel.app/badge/Golang/00ADD8?logo=golang)` |
 | HTML | <img src="https://bitbadges.vercel.app/badge/HTML/E34F26?logo=html&scale=md" /> | `![HTML](https://bitbadges.vercel.app/badge/HTML/E34F26?logo=html)` |
-| Java | <img src="https://bitbadges.vercel.app/badge/Java/FFFFFF?logo=java&logoColor=default&textColor=5382A1&scale=md" /> | `![Java](https://bitbadges.vercel.app/badge/Java/FFFFFF?logo=java&logoColor=default&textColor=5382A1)` |
+| Java | <img src="https://bitbadges.vercel.app/badge/Java/FFFFFF?logo=java&logoColor=default&textColor=5382A1&scale=md" /> | `![Java](https://bitbadges.vercel.app/badge/Java/E8E8E8?logo=java&logoColor=default&textColor=366C9C)` |
 
 <p align="right">(<a href="#-table-of-contents">back to top</a>)</p>
 

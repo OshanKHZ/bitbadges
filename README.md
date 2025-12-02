@@ -51,7 +51,7 @@ Retro pixel-art badges inspired by classic video games. Perfect for adding perso
 
 | Name | Badge | Markdown |
 |------|-------|----------|
-| TypeScript | <img src="https://bitbadges.vercel.app/badge/TypeScript/3178C6?logo=typescript&scale=md" /> | `![TypeScript](https://bitbadges.vercel.app/badge/TypeScript/3178C6?logo=typescript)` |
+| TypeScript | <img src="https://bitbadges.vercel.app/badge/TypeScript/3178C6?logo=typescript&textColor=black&scale=md" /> | `![TypeScript](https://bitbadges.vercel.app/badge/TypeScript/3178C6?logo=typescript&textColor=black)` |
 | Python | <img src="https://bitbadges.vercel.app/badge/Python/3776AB?logo=python&scale=md" /> | `![Python](https://bitbadges.vercel.app/badge/Python/3776AB?logo=python)` |
 | Golang | <img src="https://bitbadges.vercel.app/badge/Golang/00ADD8?logo=golang&logoColor=black&textColor=black&scale=md" /> | `![Golang](https://bitbadges.vercel.app/badge/Golang/00ADD8?logo=golang)` |
 | HTML | <img src="https://bitbadges.vercel.app/badge/HTML/E34F26?logo=html&scale=md" /> | `![HTML](https://bitbadges.vercel.app/badge/HTML/E34F26?logo=html)` |
@@ -83,13 +83,13 @@ Retro pixel-art badges inspired by classic video games. Perfect for adding perso
 
 | Name | Badge | Markdown |
 |------|-------|----------|
-| Docker | <img src="https://bitbadges.vercel.app/badge/Docker/2496ED?logo=docker&scale=md" /> | `![Docker](https://bitbadges.vercel.app/badge/Docker/2496ED?logo=docker)` |
-| Git | <img src="https://bitbadges.vercel.app/badge/Git/F05032?logo=git&scale=md" /> | `![Git](https://bitbadges.vercel.app/badge/Git/F05032?logo=git)` |
+| Docker | <img src="https://bitbadges.vercel.app/badge/Docker/2496ED?logo=docker&textColor=black&scale=md" /> | `![Docker](https://bitbadges.vercel.app/badge/Docker/2496ED?logo=docker&textColor=black)` |
+| Git | <img src="https://bitbadges.vercel.app/badge/Git/F05032?logo=git&textColor=black&scale=md" /> | `![Git](https://bitbadges.vercel.app/badge/Git/F05032?logo=git&textColor=black)` |
 | NPM | <img src="https://bitbadges.vercel.app/badge/NPM/CB3837?logo=npm&scale=md" /> | `![NPM](https://bitbadges.vercel.app/badge/NPM/CB3837?logo=npm)` |
-| Node.js | <img src="https://bitbadges.vercel.app/badge/Node.js/339933?logo=node_js&scale=md" /> | `![Node.js](https://bitbadges.vercel.app/badge/Node.js/339933?logo=node_js)` |
-| Vercel | <img src="https://bitbadges.vercel.app/badge/Vercel/000000?logo=vercel&scale=md" /> | `![Vercel](https://bitbadges.vercel.app/badge/Vercel/000000?logo=vercel)` |
-| Traefik | <img src="https://bitbadges.vercel.app/badge/Traefik/24A1C1?logo=traefik&scale=md" /> | `![Traefik](https://bitbadges.vercel.app/badge/Traefik/24A1C1?logo=traefik)` |
-| n8n | <img src="https://bitbadges.vercel.app/badge/n8n/EA4B71?logo=n8n&scale=md" /> | `![n8n](https://bitbadges.vercel.app/badge/n8n/EA4B71?logo=n8n)` |
+| Node.js | <img src="https://bitbadges.vercel.app/badge/Node.js/339933?logo=node_js&textColor=black&scale=md" /> | `![Node.js](https://bitbadges.vercel.app/badge/Node.js/339933?logo=node_js&textColor=black)` |
+| Vercel | <img src="https://bitbadges.vercel.app/badge/Vercel/000000?logo=vercel&logoColor=white&scale=md" /> | `![Vercel](https://bitbadges.vercel.app/badge/Vercel/000000?logo=vercel&logoColor=white)` |
+| Traefik | <img src="https://bitbadges.vercel.app/badge/Traefik/24A1C1?logo=traefik&textColor=black&scale=md" /> | `![Traefik](https://bitbadges.vercel.app/badge/Traefik/24A1C1?logo=traefik&textColor=black)` |
+| n8n | <img src="https://bitbadges.vercel.app/badge/n8n/EA4B71?logo=n8n&textColor=black&scale=md" /> | `![n8n](https://bitbadges.vercel.app/badge/n8n/EA4B71?logo=n8n&textColor=black)` |
 
 <p align="right">(<a href="#-table-of-contents">back to top</a>)</p>
 

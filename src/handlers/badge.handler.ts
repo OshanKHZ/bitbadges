@@ -73,9 +73,14 @@ export async function handleBadgeRequest(
   // Find logo if specified
   let logoPath: string | undefined;
   if (logo) {
-    // If logoColor not specified, default to same color as text (based on background luminance)
+    // logoColor options:
+    // - undefined: auto based on background luminance (white/black)
+    // - 'default': use original logo without color variant
+    // - 'white'/'black': explicit color variant
     const effectiveLogoColor =
-      logoColor ?? getContrastColorName(`#${color}`, parsedTextColor);
+      logoColor === 'default'
+        ? undefined
+        : (logoColor ?? getContrastColorName(`#${color}`, parsedTextColor));
     logoPath = findLogoPath(logo, effectiveLogoColor);
     if (!logoPath) {
       return {

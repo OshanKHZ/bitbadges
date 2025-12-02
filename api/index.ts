@@ -15,7 +15,9 @@ export default async function handler(
   req: VercelRequest,
   res: VercelResponse
 ) {
-  const urlPath = req.url?.split('?')[0] || '/';
+  // Use WHATWG URL API instead of url.parse
+  const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
+  const urlPath = url.pathname;
   const query = req.query;
 
   // Home route

@@ -29,7 +29,7 @@ export default async function handler(
   if (urlPath === '/logos') {
     const result = handleLogosRequest();
 
-    if (!result.success) {
+    if (result.success === false) {
       return res.status(result.status).json({ error: result.error });
     }
 
@@ -48,7 +48,7 @@ export default async function handler(
       textColor: query.textColor as string | undefined,
     });
 
-    if (!result.success) {
+    if (result.success === false) {
       return res.status(result.status).json({
         error: result.error,
         ...(result.availableLogos && { availableLogos: result.availableLogos }),

@@ -25,7 +25,7 @@ app.get('/badge/:text/:color', async (req, res) => {
     textColor: req.query.textColor as string | undefined,
   });
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(result.status).json({
       error: result.error,
       ...(result.availableLogos && { availableLogos: result.availableLogos }),
@@ -41,7 +41,7 @@ app.get('/badge/:text/:color', async (req, res) => {
 app.get('/logos', (_req, res) => {
   const result = handleLogosRequest();
 
-  if (!result.success) {
+  if (result.success === false) {
     return res.status(result.status).json({ error: result.error });
   }
 

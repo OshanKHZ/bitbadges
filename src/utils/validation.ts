@@ -65,11 +65,17 @@ export function parseScale(scaleParam: unknown): number {
 
 /**
  * Parses and validates textColor parameter
+ * Accepts: 'white', 'black', 'auto', or a valid 6-char hex color
  */
-export function parseTextColor(
-  textColorParam: unknown
-): 'white' | 'black' | 'auto' {
+export function parseTextColor(textColorParam: unknown): string {
+  if (typeof textColorParam !== 'string') {
+    return 'auto';
+  }
   if (textColorParam === 'white' || textColorParam === 'black') {
+    return textColorParam;
+  }
+  // Check if it's a valid hex color (reuse existing validation)
+  if (isValidHexColor(textColorParam)) {
     return textColorParam;
   }
   return 'auto';

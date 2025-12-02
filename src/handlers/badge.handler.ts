@@ -4,6 +4,7 @@
  */
 
 import { generateBadge } from '../generator/badge.js';
+import { getContrastColorName } from '../utils/color.js';
 import { findLogoPath, getAvailableLogoNames } from '../utils/logo.js';
 import {
   isValidHexColor,
@@ -72,7 +73,10 @@ export async function handleBadgeRequest(
   // Find logo if specified
   let logoPath: string | undefined;
   if (logo) {
-    logoPath = findLogoPath(logo, logoColor);
+    // If logoColor not specified, default to same color as text (based on background luminance)
+    const effectiveLogoColor =
+      logoColor ?? getContrastColorName(`#${color}`, parsedTextColor);
+    logoPath = findLogoPath(logo, effectiveLogoColor);
     if (!logoPath) {
       return {
         success: false,

@@ -112,11 +112,34 @@ export function getLuminance(color: RGB): number {
 }
 
 /**
- * Determines optimal text color based on background luminance
+ * Determines optimal color name based on background luminance
+ * Returns 'white' or 'black' string for use with logo variants
+ */
+export function getContrastColorName(
+  hexColor: string,
+  textColorOption: string = 'auto'
+): 'white' | 'black' {
+  if (textColorOption === 'white') return 'white';
+  if (textColorOption === 'black') return 'black';
+  // If hex color specified, determine based on its luminance
+  if (/^[a-f\d]{6}$/i.test(textColorOption)) {
+    const rgb = hexToRgb(textColorOption);
+    const luminance = getLuminance(rgb);
+    return luminance > 0.5 ? 'black' : 'white';
+  }
+  // Default: auto based on background
+  const rgb = hexToRgb(hexColor);
+  const luminance = getLuminance(rgb);
+  return luminance > 0.5 ? 'black' : 'white';
+}
+
+/**
+ * Determines text color based on option
+ * Accepts: 'white', 'black', 'auto', or hex color (6 chars)
  */
 export function getContrastTextColor(
   backgroundColor: RGB,
-  textColorOption: 'white' | 'black' | 'auto' = 'auto'
+  textColorOption: string = 'auto'
 ): RGB {
   if (textColorOption === 'white') {
     return { r: 255, g: 255, b: 255 };
@@ -124,7 +147,11 @@ export function getContrastTextColor(
   if (textColorOption === 'black') {
     return { r: 30, g: 30, b: 30 };
   }
-
+  // Check if it's a hex color (reuse hexToRgb)
+  if (/^[a-f\d]{6}$/i.test(textColorOption)) {
+    return hexToRgb(textColorOption);
+  }
+  // Default: auto based on background luminance
   const luminance = getLuminance(backgroundColor);
   return luminance > 0.5
     ? { r: 30, g: 30, b: 30 } // dark text for light backgrounds

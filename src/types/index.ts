@@ -22,7 +22,8 @@ export interface HSL {
 // Badge Types
 // ============================================================================
 
-export type TextColorOption = 'white' | 'black' | 'auto';
+/** Preset color names or hex color (6 chars without #) */
+export type TextColorOption = 'white' | 'black' | 'auto' | string;
 
 export interface BadgeOptions {
   text: string;

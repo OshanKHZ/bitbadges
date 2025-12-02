@@ -1,32 +1,21 @@
-import fs from "fs/promises";
-import path from "path";
+/**
+ * BMFont parser and text renderer
+ * Handles pixel-perfect bitmap font rendering
+ */
 
-import sharp from "sharp";
+import fs from 'fs/promises';
+import path from 'path';
 
-interface BMFontChar {
-  id: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  xoffset: number;
-  yoffset: number;
-  xadvance: number;
-}
+import sharp from 'sharp';
 
-interface BMFont {
-  chars: Map<number, BMFontChar>;
-  lineHeight: number;
-  base: number;
-  scaleW: number;
-  scaleH: number;
-  texturePath: string;
-  textureBuffer: Buffer | null;
-}
+import type { RGB, BMFont, BMFontChar } from '../types/index.js';
 
-// Cache disabled during development - re-enable for production
+/** Font cache - loaded once and reused */
 let cachedFont: BMFont | null = null;
 
+/**
+ * Parses BMFont character attributes from XML string
+ */
 function parseCharAttributes(charStr: string): BMFontChar {
   const attrs: Record<string, number> = {};
   const regex = /(\w+)="(-?\d+)"/g;
@@ -46,6 +35,9 @@ function parseCharAttributes(charStr: string): BMFontChar {
   };
 }
 
+/**
+ * Parses BMFont common attributes from XML string
+ */
 function parseCommonAttributes(commonStr: string): {
   lineHeight: number;
   base: number;
@@ -66,23 +58,31 @@ function parseCommonAttributes(commonStr: string): {
   };
 }
 
+/**
+ * Loads and parses a BMFont XML file
+ * Results are cached for performance
+ */
 export async function loadBMFont(xmlPath?: string): Promise<BMFont> {
   if (cachedFont) return cachedFont;
 
   const fontPath =
-    xmlPath || path.join(process.cwd(), "assets/fonts/gameboy.xml");
+    xmlPath || path.join(process.cwd(), 'assets/fonts/gameboy.xml');
   const fontDir = path.dirname(fontPath);
 
-  const xmlContent = await fs.readFile(fontPath, "utf-8");
+  const xmlContent = await fs.readFile(fontPath, 'utf-8');
 
   // Parse common attributes
   const commonMatch = xmlContent.match(/<common[^>]+>/);
-  if (!commonMatch) throw new Error("Invalid BMFont: missing <common>");
+  if (!commonMatch) {
+    throw new Error('Invalid BMFont: missing <common>');
+  }
   const common = parseCommonAttributes(commonMatch[0]);
 
   // Parse page (texture file)
   const pageMatch = xmlContent.match(/<page[^>]+file="([^"]+)"/);
-  if (!pageMatch) throw new Error("Invalid BMFont: missing <page>");
+  if (!pageMatch) {
+    throw new Error('Invalid BMFont: missing <page>');
+  }
   const texturePath = path.join(fontDir, pageMatch[1]);
 
   // Parse all chars
@@ -110,6 +110,9 @@ export async function loadBMFont(xmlPath?: string): Promise<BMFont> {
   return cachedFont;
 }
 
+/**
+ * Calculates the pixel width of a text string
+ */
 export function getTextWidth(font: BMFont, text: string): number {
   let width = 0;
   for (const char of text) {
@@ -122,57 +125,67 @@ export function getTextWidth(font: BMFont, text: string): number {
   return width;
 }
 
-interface RGB {
-  r: number;
-  g: number;
-  b: number;
+/**
+ * Calculates vertical offset to center text
+ */
+function calculateVerticalOffset(
+  font: BMFont,
+  text: string,
+  containerHeight: number
+): number {
+  let minYOffset = Infinity;
+  let maxBottomY = 0;
+
+  for (const char of text) {
+    const charCode = char.charCodeAt(0);
+    const charData = font.chars.get(charCode);
+
+    // Ignore characters with height=0 (like space) for alignment
+    if (!charData || charData.height === 0) continue;
+
+    minYOffset = Math.min(minYOffset, charData.yoffset);
+    maxBottomY = Math.max(maxBottomY, charData.yoffset + charData.height);
+  }
+
+  // Fallback if no visible characters
+  if (minYOffset === Infinity) {
+    return 0;
+  }
+
+  const textTotalHeight = maxBottomY - minYOffset;
+  return Math.floor((containerHeight - textTotalHeight) / 2) - minYOffset;
 }
 
+/**
+ * Renders text to a raw RGBA buffer
+ */
 export async function renderText(
   font: BMFont,
   text: string,
   color: RGB,
-  height: number,
+  height: number
 ): Promise<{ buffer: Buffer; width: number }> {
   if (!font.textureBuffer) {
-    throw new Error("Font texture not loaded");
+    throw new Error('Font texture not loaded');
   }
 
   const textWidth = getTextWidth(font, text);
   if (textWidth === 0) {
-    // Empty text
-    const emptyBuffer = Buffer.alloc(1 * height * 4, 0);
+    const emptyBuffer = Buffer.alloc(height * 4, 0);
     return { buffer: emptyBuffer, width: 1 };
   }
 
   // Load the font texture
-  const texture = sharp(font.textureBuffer);
-  const { data: textureData, info: textureInfo } = await texture
+  const { data: textureData, info: textureInfo } = await sharp(
+    font.textureBuffer
+  )
     .ensureAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true });
 
   // Create output buffer
   const outputBuffer = Buffer.alloc(textWidth * height * 4, 0);
-
-  // Calculate vertical offset to center text
-  // Find min yoffset and max total height (yoffset + height)
-  // Ignore characters with height=0 (like space) for alignment calculation
-  let minYOffset = Infinity;
-  let maxBottomY = 0;
-  for (const char of text) {
-    const charCode = char.charCodeAt(0);
-    const charData = font.chars.get(charCode);
-    if (charData && charData.height > 0) {
-      if (charData.yoffset < minYOffset) minYOffset = charData.yoffset;
-      const bottomY = charData.yoffset + charData.height;
-      if (bottomY > maxBottomY) maxBottomY = bottomY;
-    }
-  }
-  // Fallback if no visible characters
-  if (minYOffset === Infinity) minYOffset = 0;
-  const textTotalHeight = maxBottomY - minYOffset;
-  const baseOffsetY = Math.floor((height - textTotalHeight) / 2) - minYOffset;
+  const baseOffsetY = calculateVerticalOffset(font, text, height);
 
   let cursorX = 0;
 
@@ -180,20 +193,15 @@ export async function renderText(
     const charCode = char.charCodeAt(0);
     const charData = font.chars.get(charCode);
 
-    if (!charData) {
-      // Skip unknown characters
-      continue;
-    }
+    if (!charData) continue;
 
     // Copy pixels from texture to output
     for (let row = 0; row < charData.height; row++) {
       for (let col = 0; col < charData.width; col++) {
-        // Source position in texture
         const srcX = charData.x + col;
         const srcY = charData.y + row;
         const srcIdx = (srcY * textureInfo.width + srcX) * 4;
 
-        // Destination position in output (use yoffset from BMFont for proper alignment)
         const dstX = cursorX + charData.xoffset + col;
         const dstY = baseOffsetY + charData.yoffset + row;
 
@@ -204,7 +212,6 @@ export async function renderText(
 
         const dstIdx = (dstY * textWidth + dstX) * 4;
 
-        // Get alpha from texture (black text on white/transparent bg)
         const srcAlpha = textureData[srcIdx + 3];
         const srcR = textureData[srcIdx];
         const srcG = textureData[srcIdx + 1];
@@ -214,7 +221,6 @@ export async function renderText(
         const isDark = srcR < 128 && srcG < 128 && srcB < 128;
 
         if (srcAlpha > 0 && isDark) {
-          // Apply color
           outputBuffer[dstIdx] = color.r;
           outputBuffer[dstIdx + 1] = color.g;
           outputBuffer[dstIdx + 2] = color.b;

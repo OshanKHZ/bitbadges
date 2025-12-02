@@ -95,15 +95,14 @@ export interface APIInfo {
 // Constants
 // ============================================================================
 
-export type ScalePreset = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+export type ScalePreset = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export const SCALE_PRESETS: Record<ScalePreset, number> = {
   xs: 1,
-  sm: 1.5,
-  md: 2,
-  lg: 2.5,
-  xl: 3,
-  xxl: 4,
+  sm: 2,
+  md: 3,
+  lg: 4,
+  xl: 5,
 } as const;
 
 export const BADGE_CONSTANTS = {

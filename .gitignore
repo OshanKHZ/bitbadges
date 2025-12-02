@@ -32,3 +32,4 @@ npm-debug.log*
 # Optional: Aseprite source files (uncomment if you don't want to version them)
 # aseprite-files/
 assets/fonts/*/
+*.ase

@@ -18,7 +18,7 @@ const API_INFO: APIInfo = {
       query: {
         logo: 'Logo name (e.g., python, tailwind)',
         logoColor: 'Logo variant (e.g., white, black)',
-        scale: 'Output scale: xs, sm, md, lg, xl, xxl or 1-8 (default: md)',
+        scale: 'Output scale: xs(1), sm(2), md(3), lg(4), xl(5) or 1-8 (default: sm)',
         textColor: 'Text color: white, black, or auto (default: auto)',
       },
     },

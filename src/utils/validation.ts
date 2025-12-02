@@ -38,7 +38,8 @@ export function isValidLogoName(name: string): boolean {
 
 /**
  * Parses and validates scale parameter
- * Accepts preset names (xs, sm, md, lg, xl, xxl) or numeric values
+ * Accepts preset names (xs, sm, md, lg, xl) or integer values only
+ * Decimals are not allowed for pixel art (causes blurry scaling)
  */
 export function parseScale(scaleParam: unknown): number {
   if (typeof scaleParam !== 'string' || !scaleParam) {
@@ -50,8 +51,8 @@ export function parseScale(scaleParam: unknown): number {
     return SCALE_PRESETS[scaleParam as ScalePreset];
   }
 
-  // Try to parse as number
-  const parsed = parseFloat(scaleParam);
+  // Parse as integer only (no decimals for pixel art!)
+  const parsed = parseInt(scaleParam, 10);
   if (!isNaN(parsed)) {
     return Math.min(
       Math.max(parsed, BADGE_CONSTANTS.SCALE_MIN),

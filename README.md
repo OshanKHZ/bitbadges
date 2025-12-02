@@ -145,11 +145,10 @@ https://bitbadges.vercel.app/badge/:text/:color
 | Preset | Scale | Example |
 |--------|-------|---------|
 | `xs` | 1x | <img src="https://bitbadges.vercel.app/badge/xs/3178C6?scale=xs" /> |
-| `sm` | 1.5x | <img src="https://bitbadges.vercel.app/badge/sm/3178C6?scale=sm" /> |
-| `md` | 2x | <img src="https://bitbadges.vercel.app/badge/md/3178C6?scale=md" /> |
-| `lg` | 2.5x | <img src="https://bitbadges.vercel.app/badge/lg/3178C6?scale=lg" /> |
-| `xl` | 3x | <img src="https://bitbadges.vercel.app/badge/xl/3178C6?scale=xl" /> |
-| `xxl` | 4x | <img src="https://bitbadges.vercel.app/badge/xxl/3178C6?scale=xxl" /> |
+| `sm` | 2x | <img src="https://bitbadges.vercel.app/badge/sm/3178C6?scale=sm" /> |
+| `md` | 3x | <img src="https://bitbadges.vercel.app/badge/md/3178C6?scale=md" /> |
+| `lg` | 4x | <img src="https://bitbadges.vercel.app/badge/lg/3178C6?scale=lg" /> |
+| `xl` | 5x | <img src="https://bitbadges.vercel.app/badge/xl/3178C6?scale=xl" /> |
 
 </details>
 

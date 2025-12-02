@@ -7,7 +7,7 @@
 <p>
   <img alt="React" src="https://bitbadges.vercel.app/badge/React/45b8d8?logo=react&scale=md" />
   <img alt="Python" src="https://bitbadges.vercel.app/badge/Python/3776AB?logo=python&scale=md" />
-  <img alt="Docker" src="https://bitbadges.vercel.app/badge/Docker/2496ED?logo=docker&scale=md" />
+  <img alt="Docker" src="https://bitbadges.vercel.app/badge/Docker/2496ED?logo=docker&textColor=black&scale=md" />
   <img alt="Tailwind" src="https://bitbadges.vercel.app/badge/Tailwind/06B6D4?logo=tailwind&logoColor=black&scale=md" />
   <img alt="Supabase" src="https://bitbadges.vercel.app/badge/Supabase/3ECF8E?logo=supabase&logoColor=black&scale=md" />
 </p>
@@ -105,7 +105,7 @@ https://bitbadges.vercel.app/badge/:text/:color
   <img src="https://bitbadges.vercel.app/badge/Traefik/24A1C1?logo=traefik&logoColor=black&textColor=black&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/shadcn%2Fui/000000?logo=shadcnui&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/Golang/00ADD8?logo=golang&logoColor=black&textColor=black&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/Prisma/2D3748?logo=prisma&logoColor=white&textColor=white&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/Prisma/2D3748?logo=prisma&logoColor=white&textColor=white&scale=md&v=1" />
   <img src="https://bitbadges.vercel.app/badge/Vercel/000000?logo=vercel&logoColor=white&textColor=white&scale=md" />
 </p>
 

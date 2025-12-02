@@ -100,7 +100,7 @@ https://bitbadges.vercel.app/badge/:text/:color
   <img src="https://bitbadges.vercel.app/badge/Next.js/000000?logo=next_js&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/Git/F05032?logo=git&logoColor=black&textColor=black&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/NPM/CB3837?logo=npm&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/Cursor/000000?logo=cursor&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/Cursor/000000?logo=cursor&logoColor=white&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/n8n/EA4B71?logo=n8n&logoColor=black&textColor=black&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/Traefik/24A1C1?logo=traefik&logoColor=black&textColor=black&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/shadcn%2Fui/000000?logo=shadcnui&scale=md" />

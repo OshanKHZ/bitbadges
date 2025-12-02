@@ -7,9 +7,9 @@
 <p>
   <img src="https://bitbadges.vercel.app/badge/React/61DAFB?logo=react&logoColor=black&textColor=black&scale=lg" />
   <img src="https://bitbadges.vercel.app/badge/Python/3776AB?logo=python&scale=lg" />
-  <img src="https://bitbadges.vercel.app/badge/TypeScript/3178C6?logo=typescript&scale=lg" />
-  <img src="https://bitbadges.vercel.app/badge/Docker/2496ED?logo=docker&scale=lg" />
-  <img src="https://bitbadges.vercel.app/badge/Node.js/339933?logo=node_js&scale=lg" />
+  <img src="https://bitbadges.vercel.app/badge/TypeScript/3178C6?logo=typescript&textColor=black&scale=lg" />
+  <img src="https://bitbadges.vercel.app/badge/Docker/2496ED?logo=docker&textColor=black&scale=lg" />
+  <img src="https://bitbadges.vercel.app/badge/Node.js/339933?logo=node_js&textColor=black&scale=lg" />
 </p>
 
 Retro pixel-art badges inspired by classic video games. Perfect for adding personality to your README files.
@@ -66,7 +66,7 @@ Retro pixel-art badges inspired by classic video games. Perfect for adding perso
 | Next.js | <img src="https://bitbadges.vercel.app/badge/Next.js/000000?logo=next_js&scale=md" /> | `![Next.js](https://bitbadges.vercel.app/badge/Next.js/000000?logo=next_js)` |
 | Tailwind | <img src="https://bitbadges.vercel.app/badge/Tailwind/06B6D4?logo=tailwind&logoColor=black&textColor=black&scale=md" /> | `![Tailwind](https://bitbadges.vercel.app/badge/Tailwind/06B6D4?logo=tailwind&logoColor=black)` |
 | shadcn/ui | <img src="https://bitbadges.vercel.app/badge/shadcn%2Fui/000000?logo=shadcnui&scale=md" /> | `![shadcn/ui](https://bitbadges.vercel.app/badge/shadcn%2Fui/000000?logo=shadcnui)` |
-| Prisma | <img src="https://bitbadges.vercel.app/badge/Prisma/2D3748?logo=prisma&scale=md" /> | `![Prisma](https://bitbadges.vercel.app/badge/Prisma/2D3748?logo=prisma)` |
+| Prisma | <img src="https://bitbadges.vercel.app/badge/Prisma/2D3748?logo=prisma&logoColor=white&scale=md" /> | `![Prisma](https://bitbadges.vercel.app/badge/Prisma/2D3748?logo=prisma&logoColor=white)` |
 
 <p align="right">(<a href="#-table-of-contents">back to top</a>)</p>
 
@@ -98,7 +98,7 @@ Retro pixel-art badges inspired by classic video games. Perfect for adding perso
 | Name | Badge | Markdown |
 |------|-------|----------|
 | Claude Code | <img src="https://bitbadges.vercel.app/badge/Claude%20Code/CC785C?logo=claude-code&scale=md" /> | `![Claude Code](https://bitbadges.vercel.app/badge/Claude%20Code/CC785C?logo=claude-code)` |
-| Cursor | <img src="https://bitbadges.vercel.app/badge/Cursor/000000?logo=cursor&scale=md" /> | `![Cursor](https://bitbadges.vercel.app/badge/Cursor/000000?logo=cursor)` |
+| Cursor | <img src="https://bitbadges.vercel.app/badge/Cursor/000000?logo=cursor&logoColor=white&scale=md" /> | `![Cursor](https://bitbadges.vercel.app/badge/Cursor/000000?logo=cursor&logoColor=white)` |
 
 <p align="right">(<a href="#-table-of-contents">back to top</a>)</p>
 

@@ -7,7 +7,9 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test:badge": "tsx src/test-badge.ts"
+    "test:badge": "tsx src/test-badge.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "pixel-art",
@@ -20,6 +22,8 @@
     "@types/express": "^4.17.21",
     "@types/node": "^20.10.0",
     "@vercel/node": "^5.5.13",
+    "prettier": "^3.7.3",
+    "prettier-plugin-tailwindcss": "^0.7.2",
     "tsx": "^4.6.0",
     "typescript": "^5.3.0"
   },

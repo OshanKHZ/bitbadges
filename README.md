@@ -87,26 +87,26 @@ https://bitbadges.vercel.app/badge/:text/:color
 ## Available Logos
 
 <p align="center">
-  <img src="https://bitbadges.vercel.app/badge/React/61DAFB?logo=react&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/React/61DAFB?logo=react&logoColor=black&textColor=black&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/Python/3776AB?logo=python&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/Docker/2496ED?logo=docker&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/Tailwind/06B6D4?logo=tailwind&logoColor=black&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/Supabase/3ECF8E?logo=supabase&logoColor=black&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/Docker/2496ED?logo=docker&logoColor=black&textColor=black&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/Tailwind/06B6D4?logo=tailwind&logoColor=black&textColor=black&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/Supabase/3ECF8E?logo=supabase&logoColor=black&textColor=black&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/HTML/E34F26?logo=html&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/Redis/DC382D?logo=redis&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/Claude%20Code/CC785C?logo=claude-code&logoColor=black&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/TypeScript/3178C6?logo=typescript&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/Node.js/339933?logo=node_js&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/Claude%20Code/CC785C?logo=claude-code&logoColor=black&textColor=black&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/TypeScript/3178C6?logo=typescript&logoColor=black&textColor=black&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/Node.js/339933?logo=node_js&logoColor=black&textColor=black&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/Next.js/000000?logo=next_js&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/Git/F05032?logo=git&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/Git/F05032?logo=git&logoColor=black&textColor=black&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/NPM/CB3837?logo=npm&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/Cursor/000000?logo=cursor&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/n8n/EA4B71?logo=n8n&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/Traefik/24A1C1?logo=traefik&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/n8n/EA4B71?logo=n8n&logoColor=black&textColor=black&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/Traefik/24A1C1?logo=traefik&logoColor=black&textColor=black&scale=md" />
   <img src="https://bitbadges.vercel.app/badge/shadcn%2Fui/000000?logo=shadcnui&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/Golang/00ADD8?logo=golang&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/Prisma/2D3748?logo=prisma&scale=md" />
-  <img src="https://bitbadges.vercel.app/badge/Vercel/000000?logo=vercel&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/Golang/00ADD8?logo=golang&logoColor=black&textColor=black&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/Prisma/2D3748?logo=prisma&logoColor=white&textColor=white&scale=md" />
+  <img src="https://bitbadges.vercel.app/badge/Vercel/000000?logo=vercel&logoColor=white&textColor=white&scale=md" />
 </p>
 
 > **Note:** Some logos have `white` and `black` variants. Use `logoColor=black` or `logoColor=white` to switch.
